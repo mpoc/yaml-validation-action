@@ -30,7 +30,7 @@ const fetch = require('node-fetch');
         console.log(responseJson);
 
         if (!responseJson.response.isValid) {
-            core.setFailed(`Invalid YAML definition:\n${responseJson.response.errors.join('\n')}`);
+            core.setFailed(`Invalid YAML definition:%0A${responseJson.response.errors.join('%0A')}`);
             return;
         }
     } catch (error) {
