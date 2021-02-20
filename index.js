@@ -10,14 +10,14 @@ const fetch = require('node-fetch');
         const yamlFile = core.getInput('yaml-file');
         
         const convertedFile = yaml.load(fs.readFileSync(yamlFile, 'utf8'));
-        console.log({ convertedFile });
+        console.log('YAML converted to JSON:');
+        console.log(convertedFile);
         
         const response = await fetch(apiEndpoint, {
             method: "post",
             body: JSON.stringify(convertedFile),
             headers: { "Content-Type": "application/json" },
         });
-        console.log({ response });
         
         if (!response.ok) {
             // const errorText = await response.text();
@@ -26,10 +26,11 @@ const fetch = require('node-fetch');
         }
         
         const responseJson = await response.json();
-        console.log({ responseJson });
+        console.log('API response:')
+        console.log(responseJson);
 
         if (!responseJson.response.isValid) {
-            core.setFailed('Invalid YAML definition:\n' + responseJson.response.errors.join('\n'));
+            core.setFailed(`Invalid YAML definition:\n${responseJson.response.errors.join('\n')}`);
             return;
         }
     } catch (error) {
