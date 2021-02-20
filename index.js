@@ -8,10 +8,14 @@ try {
     const apiEndpoint = core.getInput('api-endpoint');
     const yamlFile = core.getInput('yaml-file');
     
-    const assignment = yaml.load(fs.readFileSync(yamlFile, 'utf8'));
-    console.log({ assignment });
+    const convertedFile = yaml.load(fs.readFileSync(yamlFile, 'utf8'));
+    console.log({ convertedFile });
     
-    const response = await fetch(endpoint, settings);
+    const response = await fetch(apiEndpoint, {
+        method: "post",
+        body: JSON.stringify(convertedFile),
+        headers: { "Content-Type": "application/json" },
+    });
     console.log({ response });
     
     if (!response.ok) {
