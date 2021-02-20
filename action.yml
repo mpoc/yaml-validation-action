@@ -1,0 +1,12 @@
+name: 'Remote YAML file validation'
+description: 'Validates a YAML file by converting it to JSON and sending it to a remote HTTP API endpoint.'
+inputs:
+  api-endpoint:
+    description: 'The HTTP API endpoint which validates the YAML file.'
+    required: true
+  yaml-file:
+    description: 'The name of the YAML file to validate.'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
