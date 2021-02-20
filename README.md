@@ -34,7 +34,7 @@ If `isValid` is `true`, then `errors` should be an empty array.
 
 ```yaml
 - name: Remote YAML file validation
-  uses: mpoc/yaml-validation-action@v1.4
+  uses: mpoc/yaml-validation-action@v1.5
   with:
     api-endpoint: 'http://example.com/validate'
     yaml-file: assignment.yml
