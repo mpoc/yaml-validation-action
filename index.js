@@ -27,8 +27,8 @@ const escapeNewline = (string) => {
         });
         
         if (!response.ok) {
-            // const errorText = await response.text();
-            const errorText = response.statusText;
+            const errorText = await response.text();
+            // const errorText = response.statusText;
             throw new Error(errorText);
         }
         
