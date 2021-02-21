@@ -27,9 +27,9 @@ const escapeNewline = (string) => {
         });
         
         if (!response.ok) {
-            const errorText = await response.text();
-            // const errorText = response.statusText;
-            throw new Error(errorText);
+            // const errorText = await response.text();
+            const errorText = response.statusText;
+            throw new Error(`Invalid response from server: ${errorText}`);
         }
         
         const responseJson = await response.json();
