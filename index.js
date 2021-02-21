@@ -24,7 +24,7 @@ const escapeNewline = (string) => {
             method: "post",
             body: JSON.stringify(convertedFile),
             headers: { "Content-Type": "application/json" },
-        });
+        }).catch(error => { throw new Error(`Invalid request to server: ${error.message}`) });
         
         if (!response.ok) {
             // const errorText = await response.text();
