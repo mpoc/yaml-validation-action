@@ -11,6 +11,13 @@ const fs = __nccwpck_require__(5747);
 const yaml = __nccwpck_require__(2840);
 const fetch = __nccwpck_require__(5019);
 
+const escapeNewline = (string) => {
+    return string
+        .replace(/%/g, "%25")
+        .replace(/\r/g, "%0D")
+        .replace(/\n/g, "%0A");
+};
+
 (async () => {
     try {
         const apiEndpoint = core.getInput('api-endpoint');
@@ -29,7 +36,7 @@ const fetch = __nccwpck_require__(5019);
         if (!response.ok) {
             // const errorText = await response.text();
             const errorText = response.statusText;
-            throw new Error(errorText);
+            throw new Error(`Invalid response from server: ${errorText}`);
         }
         
         const responseJson = await response.json();
@@ -37,7 +44,8 @@ const fetch = __nccwpck_require__(5019);
         console.log(responseJson);
 
         if (!responseJson.response.isValid) {
-            core.setFailed(`Invalid YAML definition:\n${responseJson.response.errors.join('\n')}`);
+            const failMessage = `Invalid YAML definition:\n${responseJson.response.errors.join('\n')}`;
+            core.setFailed(escapeNewline(failMessage));
             return;
         }
     } catch (error) {
