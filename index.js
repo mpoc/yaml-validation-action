@@ -38,7 +38,7 @@ const escapeNewline = (string) => {
 
         if (!responseJson.response.isValid) {
             const failMessage = `Invalid YAML definition:\n${responseJson.response.errors.join('\n')}`;
-            core.setFailed(escapeNewline(failMessage));
+            core.setFailed(failMessage);
             return;
         }
     } catch (error) {
