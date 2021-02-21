@@ -4,6 +4,13 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const fetch = require('node-fetch');
 
+const escapeNewline = (string) => {
+    return string
+        .replace(/%/g, "%25")
+        .replace(/\r/g, "%0D")
+        .replace(/\n/g, "%0A");
+};
+
 (async () => {
     try {
         const apiEndpoint = core.getInput('api-endpoint');
@@ -30,7 +37,8 @@ const fetch = require('node-fetch');
         console.log(responseJson);
 
         if (!responseJson.response.isValid) {
-            core.setFailed(`Invalid YAML definition:%0A${responseJson.response.errors.join('%0A')}`);
+            const failMessage = `Invalid YAML definition:\n${responseJson.response.errors.join('\n')}`;
+            core.setFailed(escapeNewline(failMessage));
             return;
         }
     } catch (error) {
