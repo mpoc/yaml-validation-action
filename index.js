@@ -35,10 +35,11 @@ const escapeNewline = (string) => {
         console.log('API response:')
         console.log(responseJson);
 
-        if (!responseJson.response.isValid) {
+        if (responseJson.response.isValid) {
+            console.log('Assignment YAML is valid')
+        } else {
             const failMessage = `Invalid YAML definition:\n${responseJson.response.errors.join('\n')}`;
             core.setFailed(failMessage);
-            return;
         }
     } catch (error) {
         core.setFailed(error.message);
